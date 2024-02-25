@@ -23,7 +23,6 @@ nav li {
     /* Specyfikacja wyglądu */
 }
 h1{
-    margin: 0;
     animation-name: color-change;
     animation-duration: 5s;
     animation-iteration-count: infinite;
@@ -43,14 +42,16 @@ h1{
     margin-left: 25px;
 }
 body{
-    display: flex;
-    flex-direction: row;
+    display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows:auto auto 1fr auto ;
 }
 html{
     --text-color-initial: #2121c9;
     ---text-color-final: green;
+}
+blockquote,h2,h1{
+    margin: 0;
 }
 @keyframes color-change {
     0%{
@@ -64,10 +65,13 @@ html{
     }
 
 }
-@media screen and (max-width: 768px) {
+@media only screen and (max-width: 600px) {
     body{
         display: flex;
         flex-direction: column;
-        align-content: center;
+    }
+    header, nav, aside, main, footer{
+        width: auto;
+        font-size: 4vw;
     }
 }
