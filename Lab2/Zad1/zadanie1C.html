@@ -7,8 +7,8 @@
 </head>
 <body>
 <script> init()</script>
-<form oninput="wynik.value = pole_tekstowe.value + pole_liczbowe.value">
-  <input id="pole_tekstowe" type="text" placeholder="Wprowadź tekst">
+<form oninput="wynik.value = parseInt(pole_tekstowe.value) + parseInt(pole_liczbowe.value)">
+  <input id="pole_tekstowe" type="number" placeholder="Wprowadź tekst">
   +
   <input id="pole_liczbowe" type="number" placeholder="Wprowadź liczbę">
   =
