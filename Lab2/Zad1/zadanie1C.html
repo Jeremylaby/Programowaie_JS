@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Plik 'zadanie1C.html'</title>
+  <script src="zadanie1.js"></script>
+</head>
+<body>
+<script> init()</script>
+<form oninput="wynik.value = pole_tekstowe.value + pole_liczbowe.value">
+  <input id="pole_tekstowe" type="text" placeholder="Wprowadź tekst">
+  +
+  <input id="pole_liczbowe" type="number" placeholder="Wprowadź liczbę">
+  =
+  <output name="wynik" for="pole_tekstowe pole_liczbowe">Tu pojawi się wynik obliczeń</output>
+  <br>
+  <input onClick='funkcja_zwrotna()' type="button" value="Wypisz">
+</form>
+</body>
+</html>
