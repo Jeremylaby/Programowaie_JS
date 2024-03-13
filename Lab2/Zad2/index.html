@@ -17,12 +17,11 @@
   should();
   mocha.setup('bdd');
   mocha.checkLeaks();
-  // Początek bloku wywołań funkcji testujących
   import {test_sum} from "./zadanie2.test.js";
   import {test_string_operations} from "./zadanie2.test.js";
   test_string_operations()
   test_sum()
-  // Koniec bloku wywołań funkcji testujących
+  //python3 -m http.server
   mocha.run();
 </script>
 </body>
