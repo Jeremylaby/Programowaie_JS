@@ -1,0 +1,137 @@
+<!-- @author Stanisław Polak <polak@agh.edu.pl> -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://unpkg.com/react@latest/umd/react.development.js"
+            crossorigin=""></script>
+    <script src="https://unpkg.com/react-dom@latest/umd/react-dom.development.js"
+            crossorigin=""></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <title>
+        Zad3
+    </title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="root">
+    <!--
+      Kontener dla komponentu.
+      React renderuje wyspecyfikowany kod HTML wewnątrz tzw. kontenera,
+      tj. wybranego przez nas elementu strony internetowej.
+      -->
+</div>
+<form onsubmit="event.preventDefault();">
+    <h2>requestAnimationFrame()</h2>
+    <label for="counter">Counter→</label>
+    <output id="counter" style="font-size: 4vh; color: red;">0</output>
+    <br>
+    <button id="start" onclick="startAnimation()">Start</button>
+    <button id="stop" disabled onclick="stopAnimation()">Stop</button>
+    <!-- ************************************************************** -->
+    <hr>
+    <h2>Time-consuming calculations in the main thread</h2>
+    <label for="result_main">Result:</label>
+    <output id="result_main">0</output>
+    <br>
+    <label for="iterations_main">Number of iterations:</label>
+    <input id="iterations_main" type="text" value="50" onfocus="document.forms[0].result_main.value ='0'">
+    <button
+            onclick="document.forms[0].result_main.value = calculatePrimes(document.forms[0].iterations_main.value || 50)">Run
+        calculations</button>
+    <!-- ************************************************************** -->
+    <h2>Time-consuming calculations in a separate thread</h2>
+    <label for="result_worker">Result:</label>
+    <output id="result_worker">0</output>
+    <br>
+    <label for="iterations_worker">Number of iterations:</label>
+    <input id="iterations_worker" type="text" value="50" onfocus="document.forms[0].result_worker.value ='0'">
+    <button
+            onclick="calculatePrimesInBackground(document.forms[0].iterations_worker.value || 50)">Run
+        calculations</button>
+</form>
+<script src="script.js">
+</script>
+<script type="text/babel">
+    class CounterInterval extends React.Component{
+        state = {
+            timerId: null,
+            counter: this.props.initial
+        }
+        startTimer = () => {
+            const timerId = setInterval(this.increaseCounter, this.props.delay);
+            this.setState({ timerId: timerId });
+        }
+        stopTimer = () =>{
+            clearInterval(this.state.timerId);
+        }
+        increaseCounter = () => {
+            this.setState({counter:this.state.counter+1})
+        }
+        render(){
+            const outputStyle = {
+                fontSize: '4vh',
+                color: 'red'
+            };
+            return(
+            <div className="counter">
+                    <label htmlFor="counter1">Counter→</label>
+                    <output id="counte1r" style={outputStyle}>{this.state.counter}</output>
+                    <br/>
+                        <button id="start1" onClick={()=>this.startTimer()}>Start</button>
+                        <button id="stop1" onClick={()=>this.stopTimer()}>Stop</button>
+            </div>
+        )
+        }
+    }
+    class CounterTimer extends React.Component{
+        state = {
+            timerId: null,
+            counter: this.props.initial
+        }
+        startTimer = () => {
+            const timerId = setTimeout(this.startTimer, this.props.delay);
+            this.setState({ timerId: timerId });
+            this.setState({counter:this.state.counter+1})
+        }
+        stopTimer = () =>{
+            clearTimeout(this.state.timerId);
+
+        }
+        render(){
+            const outputStyle = {
+                fontSize: '4vh',
+                color: 'red'
+            };
+            return(
+                <div className="counter">
+                        <label htmlFor="counter2">Counter→</label>
+                        <output id="counter2" style={outputStyle}>{this.state.counter}</output>
+                        <br/>
+                        <button id="start2" onClick={()=>this.startTimer()}>Start</button>
+                        <button id="stop12" onClick={()=>this.stopTimer()}>Stop</button>
+                </div>
+            )
+        }
+    }
+    class Counters extends React.Component{
+        render(){
+            return(
+                <React.Fragment>
+                    <h2>setInterval() / setTimeout()</h2>
+                    <CounterInterval initial={10} delay={1000}/>
+                    <CounterTimer initial={10} delay={2000}/>
+                    <hr/>
+                </React.Fragment>
+            )
+        }
+    }
+    const container = document.getElementById('root');
+    const root = ReactDOM.createRoot(container);
+    root.render(<Counters />);
+</script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!-- @author Stanisław Polak <polak@agh.edu.pl> -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation</title>
+
+</head>
+
+<body>
+<counter-interval delay="100" initial="20"></counter-interval>
+<form onsubmit="event.preventDefault();">
+    <h2>requestAnimationFrame()</h2>
+    <label for="counter">Counter→</label>
+    <output id="counter" style="font-size: 4vh; color: red;">0</output>
+    <br>
+    <button id="start" onclick="startAnimation()">Start</button>
+    <button id="stop" disabled onclick="stopAnimation()">Stop</button>
+    <!-- ************************************************************** -->
+    <hr>
+    <h2>Time-consuming calculations in the main thread</h2>
+    <label for="result_main">Result:</label>
+    <output id="result_main">0</output>
+    <br>
+    <label for="iterations_main">Number of iterations:</label>
+    <input id="iterations_main" type="text" value="50" onfocus="document.forms[0].result_main.value ='0'">
+    <button
+            onclick="document.forms[0].result_main.value = calculatePrimes(document.forms[0].iterations_main.value || 50)">Run
+        calculations</button>
+    <!-- ************************************************************** -->
+    <h2>Time-consuming calculations in a separate thread</h2>
+    <label for="result_worker">Result:</label>
+    <output id="result_worker">0</output>
+    <br>
+    <label for="iterations_worker">Number of iterations:</label>
+    <input id="iterations_worker" type="text" value="50" onfocus="document.forms[0].result_worker.value ='0'">
+    <button
+            onclick="calculatePrimesInBackground(document.forms[0].iterations_worker.value || 50)">Run
+        calculations</button>
+</form>
+
+</body>
+<script>
+    class CounterInterval extends HTMLElement {
+
+        constructor() {
+            super();
+            this.attachShadow({ mode: 'open' });
+            this.timerId = 0;
+            this.counter = 0;
+            this.delay = 1000;
+        }
+
+        connectedCallback() {
+            const initialAttribute = this.getAttribute("initial");
+            const delayAttribute = this.getAttribute("delay");
+            if (initialAttribute !== null && delayAttribute !== null) {
+                this.counter = parseInt(initialAttribute);
+                this.delay = parseInt(delayAttribute);
+            }
+            this.render();
+            this.startButton = this.shadowRoot.querySelector("#start1");
+            this.stopButton = this.shadowRoot.querySelector("#stop1");
+            this.startButton.addEventListener("click", () => this.startTimer());
+            this.stopButton.addEventListener("click", () => this.stopTimer());
+
+        }
+
+        startTimer() {
+            this.stopTimer();
+            this.timerId = setInterval(() => this.increaseCounter(), this.delay);
+        }
+
+        stopTimer() {
+            clearInterval(this.timerId);
+        }
+
+        increaseCounter() {
+            this.counter++;
+            this.render();
+        }
+
+        render() {
+            const outputStyle = {
+                fontSize: '4vh',
+                color: 'red'
+            };
+            this.shadowRoot.innerHTML = `
+            <div class="counter">
+                <label for="counter1">Counter→</label>
+                <output id="counter1" style="font-size: ${outputStyle.fontSize}; color: ${outputStyle.color};">${this.counter}</output>
+                <br/>
+                <button id="start1">Start</button>
+                <button id="stop1">Stop</button>
+            </div>
+        `;
+            
+            this.stopButton = this.shadowRoot.querySelector("#stop1");
+            this.stopButton.addEventListener("click", () => this.stopTimer());
+        }
+    }
+    window.customElements.define("counter-interval",CounterInterval);
+</script>
+<script src="script.js"></script>
+</html>
