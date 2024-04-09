@@ -16,7 +16,10 @@
 import fs from 'node:fs';
 import { argv } from 'node:process';
 
-/************************* */
+/**
+ * funkcja asynchroicznie odczytuje indormacje z pliku umieszczonego w zmiennej argv[1]
+ * @author Stanisław Barycki <barycki@agh.edu.pl>
+ */
 function read_async() {
     console.log(`1.\t\x1B[33mWykonano pierwszą linię funkcji "read_async()"\x1B[0m`);
     console.log('2.\t\x1B[33mWywołano funkcję \'readFile()\'\x1B[0m');
@@ -28,7 +31,10 @@ function read_async() {
     console.timeEnd('\tCzas wykonania "readFile()"');
     console.log(`4.\t\x1B[33mWykonano ostatnią linię funkcji "read_async()"\x1B[0m`);
 }
-
+/**
+ *  funkcja synchroicznie odczytuje indormacje z pliku umieszczonego w zmiennej argv[1]
+ * @author Stanisław Barycki <barycki@agh.edu.pl>
+ */
 function read_sync() {
     console.log(`5.\t\x1B[32mWykonano pierwszą linię funkcji "read_sync()"\x1B[0m`);
     console.log('6.\t\x1B[32mWywołano funkcję \'readFileSync()\'\x1B[0m');

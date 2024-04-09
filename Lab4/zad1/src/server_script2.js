@@ -1,19 +1,28 @@
+/**
+ * @author Stanisław Barycki <barycki@agh.edu.pl>
+ */
 import http from "node:http";
 import { URL } from "node:url";
 import fs from "node:fs";
-import { argv } from "node:process";
-const GUEST_LIST="guest_list.txt"
+/**
+ * Plik, w którym przechowywana jest lista gości.
+ * @const {string}
+ * @author Stanisław Barycki <barycki@agh.edu.pl>
+ */
+const GUEST_LIST = "guest_list.txt";
+
 /**
  * Handles incoming requests.
  *
  * @param {IncomingMessage} request - Input stream — contains data received from the browser, e.g,. encoded contents of HTML form fields.
  * @param {ServerResponse} response - Output stream — put in it data that you want to send back to the browser.
- * The answer sent by this stream must consist of two parts: the header and the body.
+ *  * The answer sent by this stream must consist of two parts: the header and the body.
  * <ul>
  *  <li>The header contains, among others, information about the type (MIME) of data contained in the body.
  *  <li>The body contains the correct data, e.g. a form definition.
  * </ul>
- * @author Stanisław Polak <polak@agh.edu.pl>
+
+ * @author Stanisław Barycki <barycki@agh.edu.pl>
  */
 
 function requestListener(request, response) {
@@ -23,15 +32,6 @@ function requestListener(request, response) {
   console.log("--------------------------------------");
   // Create the URL object
   const url = new URL(request.url, `http://${request.headers.host}`);
-  /* ************************************************** */
-  // if (!request.headers['user-agent'])
-  if (url.pathname !== "/favicon.ico")
-    // View detailed URL information
-    console.log(url);
-
-  /* *************** */
-  /* "Routes" / APIs */
-  /* *************** */
 
   switch ([request.method, url.pathname].join(" ")) {
     /* 
@@ -43,7 +43,6 @@ function requestListener(request, response) {
           ------------------------------------------------------- 
         */
     case "GET /":
-
       response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
       let list = fs.readFileSync(GUEST_LIST).toString();
       response.write(`
@@ -59,6 +58,7 @@ function requestListener(request, response) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <main class="ms-3 me-3">
       ${list}
+
     <hr>
       <h2>Nowy wpis</h2>
       <form  method="GET" action="/submit">
@@ -75,22 +75,21 @@ function requestListener(request, response) {
     </main>
   </body>
 </html>`);
-      /* ************************************************** */
-      response.end(); // The end of the response — send it to the browser
+      response.end();
       break;
     case "GET /submit":
-        const htmlContent = `
+      const htmlContent = `
                 <h2>${url.searchParams.get("name")}</h2>
                 <div>${url.searchParams.get("description")}</div>`;
-        fs.appendFile(GUEST_LIST, htmlContent, (err) => {
-          if (err) {
-            console.error("Błąd podczas dopisywania do pliku:", err);
-            return;
-          }
-          console.log("Nowe dane zostały dodane do pliku pomyślnie.");
-        });
-        response.writeHead(302, { Location: "/" });
-        response.end();
+      fs.appendFile(GUEST_LIST, htmlContent, (err) => {
+        if (err) {
+          console.error("Błąd podczas dopisywania do pliku:", err);
+          return;
+        }
+        console.log("Nowe dane zostały dodane do pliku pomyślnie.");
+      });
+      response.writeHead(302, { Location: "/" });
+      response.end();
       break;
   }
 }

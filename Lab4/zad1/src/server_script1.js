@@ -6,6 +6,7 @@
 // const { URL } = require('node:url');
 import http from "node:http";
 import { URL } from "node:url";
+import { parse }  from "querystring";
 
 /**
  * Handles incoming requests.
@@ -94,6 +95,19 @@ function requestListener(request, response) {
       response.write(`Hello ${url.searchParams.get("name")}`); // "url.searchParams.get('name')" contains the contents of the field (form) named 'name'
       /* ************************************************** */
       response.end(); // The end of the response — send it to the browser
+      break;
+    case "POST /":
+        let body
+        request.on("data", (chunk) => {
+          body = chunk.toString();
+        });
+        request.on("end", () => {
+          const name = parse(body).name;
+          response.writeHead(200, {
+            "Content-Type": "text/plain; charset=utf-8",
+          });
+          response.end(`Hello ${name}`);
+        });
       break;
 
     /* 
