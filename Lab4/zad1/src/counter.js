@@ -32,25 +32,15 @@ function main(){
             });
         break;
         default:
-                process.stdin.on("data", (data) => {
-                  const command = data.toString().trim(); // Pobieramy komendę systemową ze standardowego wejścia
-
-                  // Wywołujemy komendę za pomocą exec
-                  const childProcess = exec(
-                    command,
-                    (error, stdout, stderr) => {
-                      if (error) {
-                        console.error("Error:", error.message);
-                        return;
-                      }
-                      if (stderr) {
-                        console.error("stderr:", stderr);
-                        return;
-                      }
-                      console.log("Output:", stdout);
-                    }
-                  );
-                });
+            console.log('Wprowadź komendy — naciśnięcie Ctrl+D kończy wprowadzanie danych');
+            process.stdin.on("data", (data) => {
+              data = data.toString()
+              const child=exec(data)
+              child.stdout.on("data",(data)=>{
+                console.log(data)
+              }
+            )
+            });
 
 
     }
