@@ -18,17 +18,17 @@ function initDB() {
 
     request.onsuccess = function (event) {
         db = event.target.result;
-        buildMagazine();
+        // buildMagazine();
         console.log("wszystko git")
     };
 
     request.onerror = function (event) {
-        console.error("Błąd podczas otwierania bazy danych:", event.target.errorCode);
+        window.alert("Błąd podczas otwierania bazy danych:", event.target.errorCode);
     };
     // var request = indexedDB.deleteDatabase('carShop');
     //
     // request.onerror = function(event) {
-    //     console.error("Błąd podczas usuwania bazy danych:", event.target.errorCode);
+    //     window.alert("Błąd podczas usuwania bazy danych:", event.target.errorCode);
     // };
     //
     // request.onsuccess = function(event) {
@@ -43,7 +43,7 @@ function doCommand() {
     switch (command[0]) {
         case "sell":
             if (command.length < 4) {
-                console.error("Too few arguments")
+                window.alert("Too few arguments")
                 return;
             }
             sellOrAddClient(command[1], command[2], command[3]);
@@ -70,7 +70,7 @@ function addNewPurchase(model, clientId, price) {
         console.log("Purchase added successfully");
     }
     addPurchase.onerror = function (event) {
-        console.error("Something went wrong adding purchase")
+        window.alert("Something went wrong adding purchase")
     }
 }
 
@@ -79,7 +79,7 @@ function updateMoneySpent(clientId, price) {
     let clientStore = transaction.objectStore("clients");
     let getClient = clientStore.get(clientId);
     getClient.onerror = function (event) {
-        console.error("Something went wrong updating money Spent")
+        window.alert("Something went wrong updating money Spent")
     }
     getClient.onsuccess = function (event) {
         let client = event.target.result;
@@ -89,7 +89,7 @@ function updateMoneySpent(clientId, price) {
             console.log("Money spent updated successfully");
         }
         updateRequest.onerror = function (event) {
-            console.error("Something went wrong updating money spent")
+            window.alert("Something went wrong updating money spent")
         }
     }
 }
@@ -100,7 +100,7 @@ function sellVehicleTo(model, clientId) {
     let indexVehicle = vehicleStore.index("model");
     let vehiclerequest = indexVehicle.get(model)
     vehiclerequest.onerror = function (event) {
-        console.error("Something went wrong getting model")
+        window.alert("Something went wrong getting model")
     }
     vehiclerequest.onsuccess = function (event) {
         let vehicle = event.target.result;
@@ -108,7 +108,7 @@ function sellVehicleTo(model, clientId) {
             vehicle.quantity -= 1;
             let putVehicle = vehicleStore.put(vehicle);
             putVehicle.onerror = function (event) {
-                console.error("Something went wrong putting Vehicle")
+                window.alert("Something went wrong putting Vehicle")
             }
             putVehicle.onsuccess = function (event) {
                 console.log("vehicle sold successfully")
@@ -116,7 +116,7 @@ function sellVehicleTo(model, clientId) {
             addNewPurchase(model, clientId, vehicle.price);
             updateMoneySpent(clientId, vehicle.price);
         } else {
-            console.error("there is no such model or it is not available");
+            window.alert("there is no such model or it is not available");
         }
     }
 }
@@ -137,7 +137,7 @@ function sellOrAddClient(firstname, lastname, model) {
         }
     }
     request.onerror = function (event) {
-        console.error("Something went wrong")
+        window.alert("Something went wrong")
     }
 }
 
@@ -151,19 +151,19 @@ function addClient(firstname, lastname) {
     let clients = transaction.objectStore("clients");
     let addClient = clients.add(clientData);
     addClient.onsuccess = function (event) {
-        console.log("New clients added succesfully " + firstname + " " + lastname);
+        console.log("New clients added successfully " + firstname + " " + lastname);
     };
     addClient.onerror = function (event) {
-        console.error("Failed to add client " + firstname + " " + lastname);
+        window.alert("Failed to add client " + firstname + " " + lastname);
     };
 }
 
 function buildMagazine() {
     const magazineData = [
-        {model: "BMW-I4", type: "car", engine: "petrol", transmission: "automatic", price: 4500, quantity: 10},
-        {model: "Skoda-Superb", type: "car", engine: "petrol", transmission: "automatic", price: 5000, quantity: 20},
-        {model: "Przyczepa", type: "trailer", price: 1000, quantity: 5},
-        {model: "Przyczepa-z-plandeka", type: "trailer", price: 2000, quantity: 10}
+        {model: "BMW-I4", type: "car", engine: "petrol", transmission: "automatic",src: "img/BMW%20i4.jpg" ,price: 4500, quantity: 10},
+        {model: "Skoda-Superb", type: "car", engine: "petrol", transmission: "automatic",src: "img/skoda.jpg" , price: 5000, quantity: 20},
+        {model: "Przyczepa", type: "trailer",src: "img/przyczepa.jpg" , price: 1000, quantity: 5},
+        {model: "Przyczepa-z-plandeka", type: "trailer",src: "img/przyczepa-z-plandeką.jpg" , price: 2000, quantity: 10}
     ]
     let transaction = db.transaction("vehicles", "readwrite");
     let vehicles = transaction.objectStore("vehicles");
@@ -173,7 +173,7 @@ function buildMagazine() {
             console.log("New car added successfully " + vehicle.model);
         };
         addVehicle.onerror = function (event) {
-            console.error("Failed to add vehicle "+vehicle.model);
+            window.alert("Failed to add vehicle "+vehicle.model);
         };
     })
 
@@ -184,7 +184,7 @@ function showClients() {
     let clientStore = transaction.objectStore("clients");
     let clientCursor = clientStore.openCursor();
     clientCursor.onerror = function (event) {
-        console.error("Something went wrong showing clients")
+        window.alert("Something went wrong showing clients")
     }
     clientCursor.onsuccess = function (event) {
         let cursor = event.target.result;
@@ -201,7 +201,7 @@ function showMagazine() {
     let vehicleStore = transaction.objectStore("vehicles");
     let vehicleCursor = vehicleStore.openCursor();
     vehicleCursor.onerror = function (event) {
-        console.error("Something went wrong showing clients")
+        window.alert("Something went wrong showing clients")
     }
     vehicleCursor.onsuccess = function (event) {
         let cursor = event.target.result;
@@ -231,7 +231,7 @@ function showPurchases(clientId, money) {
         let clientIndex = purchaseStore.index("clientId");
         let purchaseCursor = clientIndex.getAll(clientId)
         purchaseCursor.onerror = function (event) {
-            console.error("Something went wrong showing clients")
+            window.alert("Something went wrong showing clients")
             reject(event.target.error);
         }
         purchaseCursor.onsuccess = function (event) {
@@ -252,7 +252,7 @@ function showClientsPurchases() {
         let cursorCount = 0;
 
         clientCursor.onerror = function (event) {
-            console.error("Something went wrong showing clients");
+            window.alert("Something went wrong showing clients");
         };
 
         clientCursor.onsuccess = function (event) {
