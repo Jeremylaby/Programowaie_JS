@@ -1,13 +1,13 @@
 [
   {
-    "id": "1",
+    "id": "3",
     "model": "BMW-I4",
     "type": "car",
     "engine": "petrol",
     "transmission": "automatic",
     "src": "img/BMW%20i4.jpg",
     "all": 40,
-    "borrowed": 4
+    "borrowed": 6
   },
   {
     "id": 2,

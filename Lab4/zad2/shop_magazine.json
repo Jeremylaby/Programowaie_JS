@@ -7,7 +7,7 @@
     "transmission": "automatic",
     "src": "img/BMW%20i4.jpg",
     "price": 4500,
-    "quantity": 4
+    "quantity": 0
   },
   {
     "id": 2,
@@ -17,7 +17,7 @@
     "transmission": "automatic",
     "src": "img/skoda.jpg",
     "price": 5000,
-    "quantity": 20
+    "quantity": 18
   },
   {
     "id": 3,
