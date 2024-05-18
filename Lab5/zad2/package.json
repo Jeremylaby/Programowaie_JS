@@ -28,10 +28,13 @@
     "test": ""
   },
   "dependencies": {
+    "bootstrap": "^5.3.3",
     "express": "^4.19.2",
     "express-basic-auth": "^1.2.1",
-    "mongodb": "^6.5.0",
-    "morgan": "^1.10.0"
+    "mogodb": "^0.0.1-security",
+    "mongodb": "^6.6.0",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1"
   },
   "devDependencies": {
     "supertest": "^6.3.4"
