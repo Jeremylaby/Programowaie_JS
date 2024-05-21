@@ -17,8 +17,8 @@ app2.use(morgan("dev"));
 app2.use(express.urlencoded({ extended: false }));
 app2.use(
   cors({
-    origin: "http://localhost:8001", // Tylko ten adres jest dozwolony
-    credentials: true, // Zgoda na przesyłanie ciasteczek i danych uwierzytelniających
+    origin: "http://localhost:8001",
+    credentials: true,
   })
 );
 /* ************************************************ */

@@ -2,8 +2,7 @@ import { MongoClient, ObjectId } from "mongodb";
 import express from "express";
 import morgan from "morgan";
 import basicAuth from "express-basic-auth";
-import multer from "multer";
-import path from "path";
+
 import xml from "xml";
 import bodyParser from "body-parser"; // Dodaj ten import
 

@@ -1,7 +1,14 @@
 /**
  * @author Stanisław Polak <polak@agh.edu.pl>
  */
-
+//without ajax get osobna strona post tez
+//Ajax get,post
+// text  undefined
+//json Object object undefined
+//document [object XMLDocument] undefined
+//Ajax post
+//Fetch Api ,post
+//text,json,document [object Promise] undefined
 import express from "express";
 import morgan from "morgan";
 import { encodeXML } from "entities";

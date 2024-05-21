@@ -201,7 +201,7 @@ html(lang='en')
                         window.alert(result);  
                     else {
                         const root = document.getElementById("root")
-                        root.innerHTML=response.text()
+                        root.innerHTML=result
                         results.set(`fetch ${http_method} ${response_type}`, result);
                         dispatchEvent(received);
                     }

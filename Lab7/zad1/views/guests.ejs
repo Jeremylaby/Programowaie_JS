@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= data.title %></title>
+  </head>
+  <body>
+    <h1>Guestbook</h1>
+    <form action="/" method="post">
+      <label for="username">Name:</label>
+      <input type="text" id="username" name="username" required />
+      <label for="message">Message:</label>
+      <input type="text" id="message" name="message" required />
+      <button type="submit">Submit</button>
+    </form>
+    <h2>Entries</h2>
+    <ul>
+      <% data.entries.forEach(function(entry) { %>
+      <li>
+        <%= entry.username %>: <%= entry.message %> (at <%=
+        entry.timestamp.toISOString() %>)
+      </li>
+      <% }); %>
+    </ul>
+  </body>
+</html>
