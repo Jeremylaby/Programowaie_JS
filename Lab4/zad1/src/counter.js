@@ -35,7 +35,7 @@ function main(){
             console.log('Wprowadź komendy — naciśnięcie Ctrl+D kończy wprowadzanie danych');
             process.stdin.on("data", (data) => {
               data = data.toString()
-              const child=exec(data)
+              const child=exec(data)     
               child.stdout.on("data",(data)=>{
                 console.log(data)
               }

@@ -1,0 +1,38 @@
+[
+  {
+    "id": "3",
+    "model": "BMW-I4",
+    "type": "car",
+    "engine": "petrol",
+    "transmission": "automatic",
+    "src": "img/BMW%20i4.jpg",
+    "all": 40,
+    "borrowed": 6
+  },
+  {
+    "id": 2,
+    "model": "Skoda-Superb",
+    "type": "car",
+    "engine": "petrol",
+    "transmission": "automatic",
+    "src": "img/skoda.jpg",
+    "all": 10,
+    "borrowed": 0
+  },
+  {
+    "id": 3,
+    "model": "Przyczepa",
+    "type": "trailer",
+    "src": "img/przyczepa.jpg",
+    "all": 5,
+    "borrowed": 0
+  },
+  {
+    "id": 4,
+    "model": "Przyczepa-z-plandeka",
+    "type": "trailer",
+    "src": "img/przyczepa-z-plandeką.jpg",
+    "all": 6,
+    "borrowed": 0
+  }
+]

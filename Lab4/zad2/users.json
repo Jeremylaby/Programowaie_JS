@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "username": "Staszek Barycki",
+    "purchasedVehicle": [],
+    "rentedVehicle": [],
+    "totalMoney": 0
+  },
+  {
+    "id": 2,
+    "username": "Jan Nowak",
+    "purchasedVehicle": [],
+    "rentedVehicle": [],
+    "totalMoney": 0
+  },
+  {
+    "id": 3,
+    "username": "Adam Kowalski",
+    "purchasedVehicle": [],
+    "rentedVehicle": [],
+    "totalMoney": 0
+  },
+  {
+    "id": 4,
+    "username": "Adam Nowak",
+    "purchasedVehicle": [],
+    "rentedVehicle": [],
+    "totalMoney": 0
+  }
+]
