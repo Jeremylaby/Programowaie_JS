@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: server_script2.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: server_script2.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @author Stanisław Barycki &lt;barycki@agh.edu.pl>
+ */
+import http from "node:http";
+import { URL } from "node:url";
+import fs from "node:fs";
+/**
+ * Plik, w którym przechowywana jest lista gości.
+ * @const {string}
+ */
+const GUEST_LIST = "guest_list.txt";
+
+/**
+ * Handles incoming requests.
+ *
+ * @param {IncomingMessage} request - Input stream — contains data received from the browser, e.g,. encoded contents of HTML form fields.
+ * @param {ServerResponse} response - Output stream — put in it data that you want to send back to the browser.
+ *  * The answer sent by this stream must consist of two parts: the header and the body.
+ * &lt;ul>
+ *  &lt;li>The header contains, among others, information about the type (MIME) of data contained in the body.
+ *  &lt;li>The body contains the correct data, e.g. a form definition.
+ * &lt;/ul>
+
+ * @author Stanisław Barycki &lt;barycki@agh.edu.pl>
+ */
+
+function requestListener(request, response) {
+  console.log("--------------------------------------");
+  console.log(`The relative URL of the current request: ${request.url}`);
+  console.log(`Access method: ${request.method}`);
+  console.log("--------------------------------------");
+  // Create the URL object
+  const url = new URL(request.url, `http://${request.headers.host}`);
+
+  switch ([request.method, url.pathname].join(" ")) {
+    /* 
+          -------------------------------------------------------
+          Generating the form if 
+             the GET method was used to send data to the server
+          and 
+             the relative URL is '/', 
+          ------------------------------------------------------- 
+        */
+    case "GET /":
+      response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+      let list = fs.readFileSync(GUEST_LIST).toString();
+      response.write(`
+&lt;!doctype html>
+&lt;html lang="en">
+  &lt;head>
+    &lt;meta charset="utf-8">
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1">
+    &lt;title>Bootstrap demo&lt;/title>
+    &lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  &lt;/head>
+  &lt;body>
+    &lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">&lt;/script>
+    &lt;main class="ms-3 me-3">
+      ${list}
+
+    &lt;hr>
+      &lt;h2>Nowy wpis&lt;/h2>
+      &lt;form  method="GET" action="/submit">
+        &lt;div class="mb-3">
+            &lt;label for="exampleFormControlInput1" class="form-label">Twoje imie i nazwisko&lt;/label>
+            &lt;input type="text" name="name" class="form-control" id="exampleFormControlInput1" placeholder="Jan Kowalski">
+        &lt;/div>
+        &lt;div class="mb-3">
+            &lt;label for="exampleFormControlTextarea1" class="form-label">Treść wpisu&lt;/label>
+            &lt;textarea name="description" class="form-control" id="exampleFormControlTextarea1" placeholder="Napiszco tylko zapragniesz pamiętaj o kulturze" rows="3">&lt;/textarea>
+        &lt;/div>
+        &lt;button type="submit"  class="btn btn-warning">Warning&lt;/button>
+      &lt;/form>
+    &lt;/main>
+  &lt;/body>
+&lt;/html>`);
+      response.end();
+      break;
+    case "GET /submit":
+      const htmlContent = `
+                &lt;h2>${url.searchParams.get("name")}&lt;/h2>
+                &lt;div>${url.searchParams.get("description")}&lt;/div>`;
+      fs.appendFile(GUEST_LIST, htmlContent, (err) => {
+        if (err) {
+          console.error("Błąd podczas dopisywania do pliku:", err);
+          return;
+        }
+        console.log("Nowe dane zostały dodane do pliku pomyślnie.");
+      });
+      response.writeHead(302, { Location: "/" });
+      response.end();
+      break;
+  }
+}
+const server = http.createServer(requestListener); // The 'requestListener' function is defined above
+server.listen(8000);
+console.log("The server was started on port 8000");
+console.log('To stop the server, press "CTRL + C"');
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#GUEST_LIST">GUEST_LIST</a></li><li><a href="global.html#read_async">read_async</a></li><li><a href="global.html#read_sync">read_sync</a></li><li><a href="global.html#requestListener">requestListener</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Apr 09 2024 13:29:43 GMT+0200 (czas środkowoeuropejski letni)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

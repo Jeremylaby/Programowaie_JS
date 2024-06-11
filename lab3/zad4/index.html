@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Zmień wartość "lang" z 'en' na 'pl' -->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous"><!-- Icons -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet"
+          href="style.css">
+    <script src="https://unpkg.com/react@latest/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@latest/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <title>
+        Tytuł strony / Page tile
+    </title>
+    <script src="Script.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg" style="background-color: #ffa901;">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+                aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarScroll">
+            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#"><i class="bi bi-car-front"></i></a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        pojazdy
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Samochody</a></li>
+                        <li><a class="dropdown-item" href="#">Przyczepy</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button onclick="doCommand()" class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
+<div class="container text-center" id="root">
+</div>
+
+<div class="conteiner text-start text-light bg-success"><i class="bi bi-c-circle"></i>SzablonyCyberAGH</div>
+
+
+<!-- Umieść tutaj treść elementu 'body' z zadania 1 -->
+<!-- Put here the contents of the 'body' element from exercise 1 -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+<script>
+    initDB();
+</script>
+<script type="text/babel">
+
+    class TrailerCard extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                clientName: ''
+            };
+        }
+
+        handleChange = (event) => {
+            this.setState({ clientName: event.target.value });
+        };
+
+        handleClick = () => {
+            const { clientName } = this.state;
+            const { handleOnClick, vehicle: { model } } = this.props;
+            const fullname = clientName.split(" ");
+            if (fullname.length === 2) {
+                handleOnClick(fullname[0], fullname[1], model);
+                this.setState({ clientName: '' });
+            }
+        };
+
+        render() {
+            const { vehicle } = this.props;
+            const { src, price, quantity, model, engine, transmission } = vehicle;
+            const { clientName } = this.state;
+            const cardClass = quantity === 0 ? "card bg-dark text-light" : "card";
+            return (
+                <div className={cardClass} style={{ width: "100%" }}>
+                    <img src={src} className="card-img-top" alt="..." />
+                    <div className="card-body">
+                        <div className="card-text text-start">
+                            <h3 className="card-text text-start">
+                                {model}
+                            </h3>
+                            <ul>
+                                <li>
+                                    Engine: {engine}
+                                </li>
+                                <li>
+                                    Transmission: {transmission}
+                                </li>
+                            </ul>
+                            <div className="d-flex justify-content-between">
+                                <div>Price: {price}</div>
+                                <div>Quantity: {quantity}</div>
+                            </div>
+                            <input type="text" className="form-control mb-2" placeholder="Imię i nazwisko klienta" value={clientName} onChange={this.handleChange} />
+                            <button className="btn btn-primary" onClick={this.handleClick} disabled={quantity === 0}>Kup</button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+    }
+
+    class CarCard extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                clientName: ''
+            };
+        }
+
+        handleChange = (event) => {
+            this.setState({ clientName: event.target.value });
+        };
+
+        handleClick = () => {
+            const { clientName } = this.state;
+            const { handleOnClick, vehicle: { model } } = this.props;
+            const fullname = clientName.split(" ");
+            if (fullname.length === 2) {
+                handleOnClick(fullname[0], fullname[1], model);
+                this.setState({ clientName: '' });
+            }
+        };
+
+        render() {
+            const { vehicle } = this.props;
+            const { src, price, quantity, model } = vehicle;
+            const { clientName } = this.state;
+            const cardClass = quantity === 0 ? "card bg-dark text-light" : "card";
+            return (
+                <div className={cardClass} style={{ width: "100%"}}>
+                    <img src={src} className="card-img-top" alt="..." />
+                    <div className="card-body">
+                        <div className="card-text text-start">
+                            <h3 className="card-text text-start">
+                                {model}
+                            </h3>
+                            <div className="d-flex justify-content-between">
+                                <div>Price: {price}</div>
+                                <div>Quantity: {quantity}</div>
+                            </div>
+                            <input type="text" className="form-control mb-2" placeholder="Imię i nazwisko klienta" value={clientName} onChange={this.handleChange} />
+                            <button className="btn btn-primary" onClick={this.handleClick} disabled={quantity === 0}>Kup</button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+    }
+
+    class VehiclesList extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                vehicles: []
+            };
+        }
+
+        componentDidMount() {
+            this.fetchVehiclesList();
+        }
+
+        fetchVehiclesList = () => {
+            const request = indexedDB.open('carShop', 1);
+
+            request.onsuccess = (event) => {
+                const db = event.target.result;
+                const transaction = db.transaction(['vehicles'], 'readonly');
+                const objectStore = transaction.objectStore('vehicles');
+                const getAllRequest = objectStore.getAll();
+
+                getAllRequest.onsuccess = (event) => {
+                    const vehiclesData = event.target.result;
+                    this.setState({ vehicles: vehiclesData });
+                };
+
+                getAllRequest.onerror = (event) => {
+                    console.error('Błąd podczas pobierania danych z IndexedDB:', event.target.error);
+                };
+            };
+
+            request.onerror = (event) => {
+                console.error('Błąd podczas otwierania bazy danych:', event.target.errorCode);
+            };
+        };
+
+        handleVehicleUpdate = (firstname, lastname, model) => {
+            const { sellVehicle } = this.props;
+            sellVehicle(firstname, lastname, model);
+            this.fetchVehiclesList();
+        };
+
+        render() {
+            const { vehicles } = this.state;
+            return (
+                <div className="row">
+                    {vehicles.map((vehicle) => (
+                        <div key={vehicle.id} className="col-sm-6">
+                            {vehicle.type === "trail" ? <TrailerCard vehicle={vehicle} handleOnClick={this.handleVehicleUpdate} /> : <CarCard vehicle={vehicle} handleOnClick={this.handleVehicleUpdate} />}
+                        </div>
+                    ))}
+                </div>
+            );
+        }
+    }
+
+    const root = document.getElementById('root');
+    ReactDOM.render(<VehiclesList sellVehicle={sellOrAddClient} />, root);
+
+</script>
+
+</body>
+</html>

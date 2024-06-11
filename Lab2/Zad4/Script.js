@@ -169,11 +169,11 @@ function buildMagazine() {
     let vehicles = transaction.objectStore("vehicles");
     magazineData.forEach(vehicle => {
         let addVehicle = vehicles.add(vehicle);
-        addClient.onsuccess = function (event) {
-            console.log("New clients added succesfully " + firstname + " " + lastname);
+        addVehicle.onsuccess = function (event) {
+            console.log("New car added successfully " + vehicle.model);
         };
-        addClient.onerror = function (event) {
-            console.error("Failed to add client " + firstname + " " + lastname);
+        addVehicle.onerror = function (event) {
+            console.error("Failed to add vehicle "+vehicle.model);
         };
     })
 

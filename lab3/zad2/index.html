@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="sheet.css" media="screen" type="text/css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tytuł strony</title>
+  <script src="script.js"></script>
+</head>
+<body>
+<header class="element">
+  <!-- Page title -->
+  <!-- Background color: #EFF -->
+  <!-- Border color: #A8A8A8 -->
+  <h1>Tytuł strony</h1>
+</header>
+<nav class="element">
+  <!--Tutaj menu nawigacyjne / Here the navigation menu -->
+  <!-- left & right margin: 25px -->
+  <ul>
+    <li>
+      <a href="">Element 1</a>
+    </li>
+    <li>
+      <a href="">Element 2</a>
+    </li>
+  </ul>
+</nav>
+<!-- Tutaj treść panelu bocznego / Here the content of the side panel-->
+<aside class="element">
+  <h1>Panel boczny</h1>
+  <h2>Ciekawe odsyłacze</h2>
+  <ul>
+    <li>
+      <a href="">Odsyłacz 1</a>
+    </li>
+    <li>
+      <a href="">Odsyłacz 2</a>
+    </li>
+    <li>
+      <a href="">Odsyłacz 3</a>
+    </li>
+  </ul>
+</aside>
+<main class="element">
+  <!--Tutaj treść strony / Here the content of the page -->
+  <h1>Treść strony</h1>
+  <blockquote>
+  </blockquote>
+</main>
+<form class="element">
+  <button type="button" onclick="setElements()">SET</button>
+  <button type="button" onclick="deleteElements()">DELETE</button>
+  <button type="button" id="addButton" onclick="addParagraph()">ADD</button>
+</form>
+<footer class="element">
+  <!-- Tutaj treść stopki / Here the content of the footer -->
+  <a href="mailto:stanislaw.barycki@gmail.com">Stanisław Barycki</a>
+</footer>
+
+</body>
+</html>
